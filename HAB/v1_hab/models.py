@@ -21,4 +21,4 @@ class HouseholdAccountBook(models.Model):
     memo = models.CharField(blank=True, max_length=100)
 
     class Meta:
-        ordering = ['-priority'],
+        ordering = ('-priority'),

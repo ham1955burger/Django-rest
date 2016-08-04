@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
-from v1_HouseholdAccountBook import views
+#from v1_HouseholdAccountBook import views
 # from django.contrib import admin
 
 urlpatterns = [
