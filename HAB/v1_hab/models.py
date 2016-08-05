@@ -22,3 +22,16 @@ class HouseholdAccountBook(models.Model):
 
     class Meta:
         ordering = ('-priority'),
+
+
+class Photo(models.Model):
+    image_file = models.ImageField(upload_to='%Y/%m/%d')
+    description = models.TextField(max_length=500, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    class Meta:
+        ordering = ('-created_at'),
+
+    def delete(self, *args, **kwargs):
+        self.image_file.delete()
+        super(Photo, self).delete(*args, **kwargs)
