@@ -38,6 +38,8 @@ CACHES = {
     }
 }
 
+THUMBNAIL_DEBUG = True
+
 INSTALLED_APPS = [
     'rest_framework',
     'v1_hab.apps.V1HabConfig',

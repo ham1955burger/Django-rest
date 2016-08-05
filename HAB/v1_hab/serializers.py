@@ -39,8 +39,8 @@ class PhotoSerializer(serializers.Serializer):
     def get_thumb(self, obj):
         print('-----')
         print(obj.image_file)
-        return 1
-        # return get_thumbnail(obj.image_file, '100x100', crop='center', quality=99)
+        # return 1
+        return get_thumbnail(obj.image_file, '100x100', crop='center', quality=99)
 
     def create(self, validated_data):
         return Photo.objects.create(**validated_data)
