@@ -31,6 +31,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 INSTALLED_APPS = [
     'rest_framework',
     'v1_hab.apps.V1HabConfig',
@@ -40,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [

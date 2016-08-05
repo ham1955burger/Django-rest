@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from sorl.thumbnail import ImageField
 
 CATEGORY_CHOICES = (
     ('salary', '월급'),
@@ -25,7 +26,8 @@ class HouseholdAccountBook(models.Model):
 
 
 class Photo(models.Model):
-    image_file = models.ImageField(upload_to='%Y/%m/%d')
+    image_file = ImageField(upload_to='%Y/%m/%d')
+    # image_thumb = ImageField(upload_to='thumbnails/%Y/%m/%d')
     description = models.TextField(max_length=500, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
 
@@ -34,4 +36,5 @@ class Photo(models.Model):
 
     def delete(self, *args, **kwargs):
         self.image_file.delete()
+        # self.image_thumb.delete()
         super(Photo, self).delete(*args, **kwargs)
