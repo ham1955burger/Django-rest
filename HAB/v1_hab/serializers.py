@@ -40,7 +40,7 @@ class PhotoSerializer(serializers.Serializer):
         print('-----')
         print(obj.image_file)
         # return 1
-        return get_thumbnail(obj.image_file, '100x100', crop='center', quality=99)
+        return get_thumbnail(obj.image_file, '100x100', crop='center', quality=99).url
 
     def create(self, validated_data):
         return Photo.objects.create(**validated_data)
