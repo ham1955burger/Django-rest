@@ -37,7 +37,7 @@ class Photo(models.Model):
 
     def delete(self, *args, **kwargs):
         # 순서주의! cached db에서 지워준 후, 본 db에서 삭제
-        delete(self.image_file)
-        self.image_file.delete()
+        # delete(self.image_file)
+        # self.image_file.delete()
         # self.image_thumb.delete()
         super(Photo, self).delete(*args, **kwargs)

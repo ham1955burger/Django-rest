@@ -4,7 +4,31 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from v1_hab.models import HouseholdAccountBook, Photo
 from v1_hab.serializers import HouseholdAccountBookSerializer, PhotoSerializer
+from django_cleanup.signals import cleanup_pre_delete, cleanup_post_delete
+from django.conf import settings
 
+
+
+# signals 적용
+def sorl_delete(**kwargs):
+    from sorl.thumbnail import delete
+    delete(kwargs['file'])
+
+# empty directories 지우는 방법 찾아보기
+# def deleted_empty_directories(**kwargs):
+#     import os
+#     for root, dirs, files in os.walk(os.path.join(settings.MEDIA_ROOT)):
+#         print("root=" + root)
+#         # print("dirs=" + dirs)
+#         for d in dirs:
+#             print("directory = " + d)
+#             dir = os.path.join(root, d)
+#             # check if dir is empty
+#             if not os.listdir(dir):
+#                 os.rmdir(dir)
+
+cleanup_pre_delete.connect(sorl_delete)
+# cleanup_post_delete.connect(deleted_empty_directories)
 
 @api_view(['GET', 'POST'])
 def list(request):
@@ -72,7 +96,7 @@ class PhotoDetail(APIView):
 
     def put(self, request, pk, format=None):
         photo = self.get_object(pk)
-        serializer = PhotoSerializer(photo, data=request.data, partial=True)
+        serializer = PhotoSerializer(photo, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -81,4 +105,4 @@ class PhotoDetail(APIView):
     def delete(self, request, pk, format=None):
         photo = self.get_object(pk)
         photo.delete()
-        return Response("delete!", status=status.HTTP_204_NO_CONTENT)
+        return Response(data="delete!" + pk, status=status.HTTP_204_NO_CONTENT)

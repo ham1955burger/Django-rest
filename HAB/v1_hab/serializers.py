@@ -4,7 +4,7 @@ from django.utils import timezone
 import os
 from django.conf import settings
 from sorl.thumbnail import get_thumbnail
-from sorl.thumbnail import delete
+# from sorl.thumbnail import delete
 
 class HouseholdAccountBookSerializer(serializers.Serializer):
     pk = serializers.IntegerField(read_only=True)
@@ -48,10 +48,11 @@ class PhotoSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         if instance.image_file != validated_data.get('image_file', instance.image_file):
+            print('1')
             # 기존 image_file과 현재 image_file이 다르면 파일경로에서 기존 image_file 삭제
-            os.remove(os.path.join(settings.MEDIA_ROOT, instance.image_file.path))
+            # os.remove(os.path.join(settings.MEDIA_ROOT, instance.image_file.path))
             # cached db에 있는 thumbnail도 제거
-            delete(instance.image_file)
+            # delete(instance.image_file)
 
         instance.image_file = validated_data.get('image_file', instance.image_file)
         instance.description = validated_data.get('description', instance.description)
