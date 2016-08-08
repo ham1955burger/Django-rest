@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from sorl.thumbnail import ImageField
+from sorl.thumbnail import delete
 
 CATEGORY_CHOICES = (
     ('salary', '월급'),
@@ -35,6 +36,8 @@ class Photo(models.Model):
         ordering = ('-created_at'),
 
     def delete(self, *args, **kwargs):
+        # 순서주의! cached db에서 지워준 후, 본 db에서 삭제
+        delete(self.image_file)
         self.image_file.delete()
         # self.image_thumb.delete()
         super(Photo, self).delete(*args, **kwargs)
