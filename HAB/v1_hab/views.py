@@ -105,4 +105,4 @@ class PhotoDetail(APIView):
     def delete(self, request, pk, format=None):
         photo = self.get_object(pk)
         photo.delete()
-        return Response(data="delete!" + pk, status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
