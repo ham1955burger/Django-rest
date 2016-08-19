@@ -96,7 +96,7 @@ class PhotoDetail(APIView):
 
     def put(self, request, pk, format=None):
         photo = self.get_object(pk)
-        serializer = PhotoSerializer(photo, data=request.data)
+        serializer = PhotoSerializer(photo, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
