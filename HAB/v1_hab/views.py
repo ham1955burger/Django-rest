@@ -57,7 +57,8 @@ def detail(request, pk):
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = HouseholdAccountBookSerializer(householdAccountBook, data=request.data)
+        print(request.data)
+        serializer = HouseholdAccountBookSerializer(householdAccountBook, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -93,6 +94,14 @@ class PhotoDetail(APIView):
         photo = self.get_object(pk)
         serializer = PhotoSerializer(photo)
         return Response(serializer.data)
+    
+    def post(self, request, pk, format=None):
+        photo = self.get_object(pk)
+        serializer = PhotoSerializer(photo, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk, format=None):
         photo = self.get_object(pk)
