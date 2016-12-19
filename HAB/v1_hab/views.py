@@ -104,6 +104,7 @@ class PhotoDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk, format=None):
+        print(request.data)
         photo = self.get_object(pk)
         serializer = PhotoSerializer(photo, data=request.data, partial=True)
         if serializer.is_valid():
